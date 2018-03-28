@@ -1,0 +1,48 @@
+//buildscript {
+//	ext {
+//		springBootVersion = '2.0.0.RELEASE'
+//	}
+//	repositories {
+//		mavenCentral()
+//	}
+//	dependencies {
+//		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+//	}
+//}
+//
+//apply plugin: 'java'
+//apply plugin: 'eclipse'
+//apply plugin: 'org.springframework.boot'
+//apply plugin: 'io.spring.dependency-management'
+
+plugins {
+	id 'java'
+	id 'eclipse'
+	id 'org.springframework.boot' version "2.0.0.RELEASE"
+	id 'io.spring.dependency-management' version "1.0.4.RELEASE"
+}
+
+group = 'tw.noah'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = 1.8
+
+repositories {
+	mavenCentral()
+}
+
+configurations.all {
+	exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	exclude group: 'org.slf4j'
+}
+
+dependencies {
+	compile('org.springframework.boot:spring-boot-starter')
+
+	compileOnly('org.projectlombok:lombok')
+	testCompileOnly('org.projectlombok:lombok')
+
+	testCompile('org.springframework.boot:spring-boot-starter-test')
+
+	compile group: 'org.apache.logging.log4j', name: 'log4j-api'
+	compile group: 'org.apache.logging.log4j', name: 'log4j-core'
+}
