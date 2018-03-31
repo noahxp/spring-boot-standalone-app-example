@@ -1,1 +1,12 @@
 # special spring boot setting
+
+my:
+  mail:
+    server: myoms.com.tw
+    sender: mail@myoms.com.tw
+    locale: zh-tw
+
+your:
+  date: 2010/01/01
+  lists: 1,2,3,4,5
+
