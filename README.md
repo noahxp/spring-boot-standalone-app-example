@@ -12,7 +12,7 @@ Spring Boot 直接執行程式範例
 ```bash
 java -jar XXXXXX.jar
 ```
-- 如果需再引用外部 jar 
-```bash
-java -cp XXXXXX.jar:YYYYYY.jar org.springframework.boot.loader.JarLauncher
+- 如果需再引用外部 jar 或環境參數 
+```bash 
+java $JAVA_OPTS -Dspring.profiles.active=dev -cp $CLASSPATH org.springframework.boot.loader.JarLauncher
 ```
