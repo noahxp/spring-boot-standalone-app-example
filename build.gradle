@@ -1,40 +1,33 @@
-//buildscript {
-//	ext {
-//		springBootVersion = '2.0.0.RELEASE'
-//	}
-//	repositories {
-//		mavenCentral()
-//	}
-//	dependencies {
-//		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
-//	}
-//}
-//
-//apply plugin: 'java'
-//apply plugin: 'eclipse'
-//apply plugin: 'org.springframework.boot'
-//apply plugin: 'io.spring.dependency-management'
+/* 因使用 @ConfigurationProperties ，故需加入 Optional，相關文件
+	https://docs.spring.io/spring-boot/docs/2.0.0.RELEASE/reference/html/configuration-metadata.html#configuration-metadata-annotation-processor
+	https://github.com/spring-gradle-plugins/propdeps-plugin
+*/
 
-//buildscript {
-//	repositories {
-//		maven { url 'http://repo.spring.io/plugins-release' }
-//	}
-//	dependencies {
-//		classpath 'io.spring.gradle:propdeps-plugin:0.0.9.RELEASE'
-//	}
-//}
-
-plugins {
-	id 'java'
-	id 'eclipse'
-	id 'org.springframework.boot' version "2.0.0.RELEASE"
-	id 'io.spring.dependency-management' version "1.0.4.RELEASE"
+buildscript {
+	ext {
+		springBootVersion = '2.0.3.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven { url 'http://repo.spring.io/plugins-release' }
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath 'io.spring.gradle:propdeps-plugin:0.0.9.RELEASE'
+	}
 }
 
-//apply plugin: 'propdeps'
-//apply plugin: 'propdeps-maven'
-//apply plugin: 'propdeps-idea'
-//apply plugin: 'propdeps-eclipse'
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'io.spring.dependency-management'
+
+configure(allprojects) {
+	apply plugin: 'propdeps'
+	apply plugin: 'propdeps-maven'
+	apply plugin: 'propdeps-idea'
+	apply plugin: 'propdeps-eclipse'
+}
 
 group = 'tw.noah'
 version = '0.0.1-SNAPSHOT'
@@ -44,24 +37,22 @@ repositories {
 	mavenCentral()
 }
 
-configurations.all {
-	exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
-	exclude group: 'org.slf4j'
-}
 
 dependencies {
+
 	compile('org.springframework.boot:spring-boot-starter')
-
-//	optional "org.springframework.boot:spring-boot-configuration-processor"
-
 
 	compileOnly('org.projectlombok:lombok')
 	testCompileOnly('org.projectlombok:lombok')
 
 	testCompile('org.springframework.boot:spring-boot-starter-test')
 
+
 	compile group: 'org.apache.logging.log4j', name: 'log4j-api'
 	compile group: 'org.apache.logging.log4j', name: 'log4j-core'
+
+	optional "org.springframework.boot:spring-boot-configuration-processor"
 }
 
-//compileJava.dependsOn(processResources)
+compileJava.dependsOn(processResources)
+
