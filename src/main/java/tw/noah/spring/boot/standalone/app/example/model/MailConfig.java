@@ -2,6 +2,7 @@ package tw.noah.spring.boot.standalone.app.example.model;
 
 import java.util.Map;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
@@ -13,6 +14,20 @@ import org.springframework.stereotype.Component;
 @Data
 public class MailConfig {
 
+	@Value("${mailServer}")
+	private String mailServer;
+
+	@Value("sender")
+	private String sender;
+
 	private Map<String,String> mail;
+
+	/*
+	my:
+  mail:
+    server: myoms.com.tw
+    sender: mail@myoms.com.tw
+    locale: zh-tw
+	 */
 
 }
