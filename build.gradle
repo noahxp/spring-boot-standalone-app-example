@@ -5,7 +5,7 @@
 
 buildscript {
 	ext {
-		springBootVersion = '2.0.3.RELEASE'
+		springBootVersion = '2.1.0.RELEASE'
 	}
 	repositories {
 		mavenCentral()
@@ -30,7 +30,7 @@ configure(allprojects) {
 }
 
 group = 'tw.noah'
-version = '0.0.1-SNAPSHOT'
+version = '1.0.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 repositories {
@@ -56,3 +56,35 @@ dependencies {
 
 compileJava.dependsOn(processResources)
 
+
+ext.gitUrl = {
+	def p1 = 'git config --get remote.origin.url'.execute()
+	p1.waitFor()
+	return p1.text.trim()
+}
+ext.gitBranch = {
+	def p2 = 'git rev-parse --abbrev-ref HEAD'.execute()
+	p2.waitFor()
+	return p2.text.trim()
+}
+ext.gitHash = {
+	def p3 = 'git describe --always HEAD'.execute()
+	p3.waitFor()
+	return p3.text.trim()
+}
+
+bootJar {
+	baseName = 'batch'
+	version = '1.0.0'
+	manifest {
+		attributes('Build-Time': new Date().format("yyyy-MM-dd HH:mm:ssZ"),
+				'Built-On': java.net.InetAddress.getLocalHost().toString(),
+				'Built-By': System.getProperty('user.name'),
+				'Built-JDK': System.getProperty('java.version'),
+				'Git-Url': gitUrl(),
+				'Git-Branch': gitBranch(),
+				'Git-Commit': gitHash(),
+		)
+
+	}
+}

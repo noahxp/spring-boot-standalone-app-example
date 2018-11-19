@@ -31,7 +31,7 @@ public class MyServiceImpl implements MyService {
 	/**
 	 * inject a list type
 	 */
-	@Value("#{'${your.lists}'.split(',')}")
+	@Value("#{'${your.lists}'.trim().split(',')}")
 	private List<Integer> lists;
 
 	public String sayHi(String name) {
